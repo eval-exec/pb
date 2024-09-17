@@ -11,3 +11,8 @@ pom.xml.asc
 /.prepl-port
 .hgignore
 .hg/
+
+pastebin.db
+.clj-kondo
+.lsp
+pb.iml
