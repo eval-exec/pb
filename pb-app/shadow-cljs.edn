@@ -1,11 +1,17 @@
 ;; shadow-cljs configuration
 {:source-paths
- ["src/dev"
-  "src/main"
-  "src/test"]
+ ["src/main"]
 
  :dependencies
- []
+ [[cljsjs/react "17.0.2-0"]
+  [cljsjs/react-dom "17.0.2-0"]
+  [reagent "1.2.0"]]
+
+ :dev-http {8080 ["resources/public" "target/public"]}
+ :resource-paths ["resources" "target"]
 
  :builds
- {}}
+ {:frontend
+  {:target :browser
+   :output-dir "target/public/js"
+   :modules {:main {:entries [pb.frontend.app]}}}}}
