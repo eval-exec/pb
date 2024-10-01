@@ -1,0 +1,31 @@
+* GET /
+#+begin_src shell :results code
+  curl -s 127.0.0.1:8080
+#+end_src
+#+RESULTS:
+#+begin_src shell
+<h1>Hello World</h1>
+#+end_src
+
+#+RESULTS:
+
+
+* GET /all 
+#+begin_src shell :results code :wrap src text
+  curl -s 127.0.0.1:8080/all
+#+end_src
+
+#+RESULTS:
+#+begin_src text
+[{:pastebin/uuid "464381d0-6941-4200-946c-0a8264bdc49b", :pastebin/content "pastebin content"} {:pastebin/uuid "a2c11da6-ebc6-4639-b645-36bb89438b92", :pastebin/content "content one"} {:pastebin/uuid "97b3680e-7f57-42f6-b007-29d0b030a531", :pastebin/content "content one"} {:pastebin/uuid "cef20bdf-ad86-4265-9680-190df073892a", :pastebin/content "content one"} {:pastebin/uuid "ae4f6012-35ad-4fa9-a6b8-baec846fcbda", :pastebin/content "content one"} {:pastebin/uuid "daf01e79-146b-4a05-aaf7-460d1ce26a73", :pastebin/content "content one"} {:pastebin/uuid "b37039dd-d841-414a-843a-00489d2e402b", :pastebin/content "content one"} {:pastebin/uuid "73256d8e-0e4f-4eba-8342-05c5b1fb6e2c", :pastebin/content "content one"} {:pastebin/uuid "90240f83-3bb7-4be4-b568-071392981b2a", :pastebin/content "content one"} {:pastebin/uuid "7bb5fb4a-9db5-497a-b6fe-89ccab5e79c9", :pastebin/content "content one"} {:pastebin/uuid "b2b4e5f0-e5a0-42ae-817c-6ed4e06b4e8d", :pastebin/content "content one"} {:pastebin/uuid "e1e182e8-4d58-41d2-bf74-0cdc479dfab3", :pastebin/content "content one"} {:pastebin/uuid "986c9d00-c461-46c7-a46a-f84879525105", :pastebin/content "content one"} {:pastebin/uuid "3b740bac-63a0-477d-8732-db921b4f6cb2", :pastebin/content "content one"} {:pastebin/uuid "34f116b8-6d81-45d6-b487-f92869ecd35c", :pastebin/content "content one"} {:pastebin/uuid "764562ec-4a29-45b2-a4f2-a2a424d2ef77", :pastebin/content "content one"} {:pastebin/uuid "cade33a1-45f2-41d4-92a1-6646b55e66fd", :pastebin/content "content one"} {:pastebin/uuid "6181fd93-82e5-47a4-9b4f-cd80dc7dbc17", :pastebin/content "content one"} {:pastebin/uuid "ba7f0ed1-7110-462a-9ddc-cf820e8dd8ac", :pastebin/content "content one"} {:pastebin/uuid "ea84d399-0082-4411-9f53-63f8faf55f4e", :pastebin/content "content one"} {:pastebin/uuid "d2b94b51-f679-4ae0-b71f-cf4b2ac54e3b", :pastebin/content "content one"} {:pastebin/uuid "9047faa9-bf3b-4f35-a571-9834f65843a8", :pastebin/content "pastebin content"} {:pastebin/uuid "3e77d715-d814-4e68-9079-5fa8ac8192d2", :pastebin/content "content one"} {:pastebin/uuid "7f42f873-9a11-460e-9cdc-40998d913d88", :pastebin/content "content one"} {:pastebin/uuid "a8f4d905-cf52-43d6-bd98-f55180826350", :pastebin/content "content one"}]
+#+end_src
+
+* POST
+#+BEGIN_SRC shell :results code
+  curl -s -X POST 127.0.0.1:8080 -d '{"content": "content one"}'
+#+END_SRC
+
+#+RESULTS:
+#+begin_src shell
+http://127.0.0.1:3000/23a5f328-d727-4eea-97e3-8e665143bd23
+#+end_src
