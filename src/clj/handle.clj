@@ -1,5 +1,6 @@
 (ns clj.handle
   (:require [jsonista.core :as j]
+            [clojure.tools.logging :as logging]
             [compojure.route]
             [compojure.core]
             [next.jdbc :as jdbc]))
@@ -20,11 +21,8 @@
 
 (defn content-by-id
   [request]
-  ;; (clojure.pprint/pprint request)
   (let [uuid (:uuid (:params request))
         content  (jdbc/execute-one! ds ["SELECT content FROM pastebin WHERE uuid = ?" uuid])]
-    (clojure.pprint/pprint (type content))
-    (clojure.pprint/pprint (:pastebin/content content))
     (:pastebin/content content)))
 
 (defn submit-content
@@ -43,14 +41,17 @@
 
 (defn page-not-found
   [request]
-  (clojure.pprint/pprint request)
   "Pastebin: Page Not Found")
 
 (compojure.core/defroutes app
-  (compojure.core/GET "/all" [] all-contents) ;; get pastebin homepage
-  (compojure.core/GET "/:uuid" params content-by-id) ;; get pastebin content by uuid
-  (compojure.core/POST "/" params submit-content) ;; submit pastebin content by post body
   (compojure.core/GET "/" [] (ring.util.response/file-response "index.html" {:root "public"}))
-
-  (compojure.route/resources "/*")
+  (compojure.core/GET "/content/:uuid" params content-by-id) ;; get pastebin content by uuid
+  (compojure.core/GET "/all" [] all-contents) ;; get pastebin homepage
+  (compojure.core/POST "/" params submit-content) ;; submit pastebin content by post body
+  (compojure.route/resources "/")
   (compojure.route/not-found  page-not-found))
+
+;; (compojure.core/defroutes resources-routes
+;;   (compojure.route/resources "/"))
+
+;; (app {:uri "/index.html" :request-method :get})
