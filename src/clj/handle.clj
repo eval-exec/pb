@@ -44,7 +44,9 @@
   "Pastebin: Page Not Found")
 
 (compojure.core/defroutes app
-  (compojure.core/GET "/" [] (ring.util.response/file-response "index.html" {:root "public"}))
+  (compojure.core/GET "/" []
+    (ring.util.response/resource-response
+     "index.html" {:root "public"}))
   (compojure.core/GET "/content/:uuid" params content-by-id) ;; get pastebin content by uuid
   (compojure.core/GET "/all" [] all-contents) ;; get pastebin homepage
   (compojure.core/POST "/" params submit-content) ;; submit pastebin content by post body
