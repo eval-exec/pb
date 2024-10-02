@@ -12,8 +12,8 @@
   compojure/compojure {:mvn/version "1.7.1"}}
 
  :aliases
- {:run-m {:main-opts ["-m" "eval-exec.pb"]}
-  :run-x {:ns-default eval-exec.pb
+ {:run-m {:main-opts ["-m" "clj.pb"]}
+  :run-x {:ns-default clj.pb
           :exec-fn greet
           :exec-args {:name "Clojure"}}
   :build {:deps {io.github.clojure/tools.build {:mvn/version "0.10.5"}}
