@@ -40,8 +40,8 @@
         content (:content body-value)
         uuid (java.util.UUID/randomUUID)
         url (format "http://127.0.0.1:8080/%s" uuid)]
-    ;; Do something with the body, e.g., save it to a database or process it
-    ;; For demonstration purposes, we'll just print the body
+	;; Do something with the body, e.g., save it to a database or process it
+	;; For demonstration purposes, we'll just print the body
     (jdbc/execute! ds ["INSERT INTO pastebin (uuid, content) VALUES (?, ?)" uuid content])
     (ring.util.response/response {:url url})))
 
