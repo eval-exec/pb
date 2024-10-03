@@ -4,7 +4,7 @@
 
  :dependencies
  [[reagent "1.2.0"]
-  [cljs-ajax "0.8.1"]]
+  [cljs-ajax "0.8.4"]]
 
  :dev-http {8081 ["resources"]}
 
