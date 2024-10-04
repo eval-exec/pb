@@ -5,7 +5,7 @@
 
 (def lib 'net.clojars.clj/pb)
 (def version "0.1.0-SNAPSHOT")
-(def main 'eval-exec.pb)
+(def main 'clj.pb)
 (def class-dir "target/classes")
 
 (defn test "Run all the tests." [opts]
