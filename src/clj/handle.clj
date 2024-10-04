@@ -39,7 +39,7 @@
         body-value (j/read-value body j/keyword-keys-object-mapper)
         content (:content body-value)
         uuid (java.util.UUID/randomUUID)
-        url (format "http://127.0.0.1:8080/%s" uuid)]
+        url uuid]
 	;; Do something with the body, e.g., save it to a database or process it
 	;; For demonstration purposes, we'll just print the body
     (jdbc/execute! ds ["INSERT INTO pastebin (uuid, content) VALUES (?, ?)" uuid content])
@@ -54,9 +54,10 @@
     (ring.util.response/resource-response
      "index.html" {:root "public"}))
   (compojure.core/GET "/all" []  all-contents) ;; get pastebin homepage
-  (compojure.core/GET "/:uuid" params content-by-id) ;; get pastebin content by uuid
+  (compojure.core/GET "/content/:uuid" params content-by-id) ;; get pastebin content by uuid
   (compojure.core/POST "/" params submit-content) ;; submit pastebin content by post body
   (compojure.route/resources "/")
+  (compojure.core/GET "/*" [] (ring.util.response/file-response "index.html")) ;; submit pastebin content by post body
   (compojure.route/not-found  page-not-found))
 
 ;; (compojure.core/defroutes resources-routes
