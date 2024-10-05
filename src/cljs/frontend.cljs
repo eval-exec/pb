@@ -1,36 +1,47 @@
 (ns cljs.frontend
   (:require
-   [reagent.core :as r]
-   ["react" :as react]
    [ajax.core :refer [GET POST]]
-   [reagent.dom :as rdom]
+   [clojure.core.async :refer [chan put!]]
+   [reagent.core :as r]
    [reagent.dom.client :as rclient]))
 
 (defn app-header []
   (fn []
     [:h1 [:a {:href "/"} "Pastebin: "]]))
+(defn async-get
+  [url]
+  (let [ch (chan)]
+    (GET url {:handler (fn [resp]
+                         (put! ch resp))})
+    ch))
 
 (defonce root (rclient/create-root (.getElementById js/document "app")))
+(defn app-show [uuid content]
+  (fn []
+    (let [show-url (str "https://" js/window.location.host "/" uuid)
+  ;; if content is nil or empty , then async-get content
+          content
+          (if (or (nil? content) (empty? content))
+            (do
+              (js/console.log "content is nil or empty")
+              (async-get (str "/api/content/" uuid)))
+            content)]
+      (js/console.log "app-show: content is :" content)
+      [:div
+       [app-header]
+       [:a {:href show-url} show-url]
+       [:div
+        [:pre
+         [:code content]]]])))
 
-(def content-show (r/atom nil))
-(def content-url (r/atom nil))
-
-(defn app-show []
-  [:div
-   [app-header]
-   [:a {:href (str "http://" js/window.location.host "/" @content-url)} (str js/window.location.host "/" @content-url)]
-   (js/console.log @content-show)
-   [:div
-    [:pre
-     [:code @content-show]]]])
-
-(defn app-render-show [url]
-  (GET (str "/content/" url)
+(defn app-render-show [uuid]
+  (GET (str "/api/content/" uuid)
     {:handler (fn [response]
-                (js/console.log (type response))
-                (reset! content-show (.get response "pastebin/content"))
-                (reset! content-url url)
-                (rclient/render root [app-show]))
+                (js/console.log "app-render-show: " (type response))
+                (let [content (.get response "pastebin/content")
+                      show (app-show uuid content)]
+                  (rclient/render root [show])))
+
      :error-handler (fn [response]
                       (js/alert "Failed to fetch content"))}))
 
@@ -43,7 +54,8 @@
 
 ;; Function to handle content submission
 (defn submit-content [content]
-  (POST "/"
+  (POST
+    "/api/submit"
     {:params {:content content}
      :format :json
      :handler #'submit-content-handler

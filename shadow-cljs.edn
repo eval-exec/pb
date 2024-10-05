@@ -1,16 +1,18 @@
 ;; shadow-cljs configuration
 {:source-paths
- ["src"]
+ ["src" "resources"]
 
  :dependencies
  [[reagent "1.2.0"]
   [cljs-ajax "0.8.4"]]
 
- :dev-http {8081 ["resources"]}
+ ;; :dev-http {8081 ["resources"]}
 
  :builds
  {:frontend
   {:target :browser
-   :output-dir "resources/public/js"
+   :output-dir "public/js"
    :asset-path "/js"
-   :modules {:main {:entries [cljs.frontend]}}}}}
+   :modules {:main {:entries [cljs.frontend]}}
+   :release {:compiler-options {:optimizations :advanced}}}}}
+
