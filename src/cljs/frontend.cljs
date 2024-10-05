@@ -66,8 +66,6 @@
   (let [content (r/atom "")]
     (fn []
       [:div
-       [:div
-        "The atom " [:code "click-count"] " has value:" @submitted-atom " . "]
        [:textarea {:placeholder "Paste your content here..."
                    :style {:width "80%" :height 400}
 				   ;; :cols js/window.innerHeight
